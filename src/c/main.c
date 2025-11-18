@@ -48,7 +48,11 @@ int main(int argc, char *argv[]) {
 
   if (is_folder) {
     printf("%s is a directory\n", file_name);
+    printf("-------------\n");
     list_dir(file_name);
+    printf("-------------\n");
+
+    return 0;
   }
 
   if (has_char(file_name, ':')) {
