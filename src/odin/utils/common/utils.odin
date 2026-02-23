@@ -35,8 +35,8 @@ peep [file | args]
 examples
 ---------
 peep file.txt
-peep file.txt 40 (prints L40 only)
-peep file.txt 40:50 (prints L40-L50)
+peep file.txt:40 (prints L40 only)
+peep file.txt:40:50 (prints L40-L50)
 ---------
 args
 ---------
