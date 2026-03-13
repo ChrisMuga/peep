@@ -19,6 +19,7 @@
 //  - peep test.txt 50-60 ("-" is an invalid delimiter)
 //  - peep test.txt 50kk-60sk (either of the specifiers are not non-zero
 //  numbers)
+// TODO: Listing nested directories recursively.
 
 // ## Examples:
 //     - ./bin/peep example.txt // To print the whole file
