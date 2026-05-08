@@ -23,7 +23,6 @@ const fs = std.fs;
 ///     - ./zig-out/bin/peep example.txt 14 // To print line 14 only
 ///     - ./zig-out/bin/peep example.txt 14:20 // To print lines 14 to 20
 
-// TODO: Migrate to zig version 0.17.0-dev.135+9df02121d
 // TODO: Get started with tests
 // TODO: Implement man page for peep
 // TODO: Implement piping e.g. `git log | peep`
@@ -36,19 +35,21 @@ const fs = std.fs;
 //  - peep test.txt 50:e (if line specifier B is invalid)
 //  - peep test.txt 50-60 ("-" is an invalid delimiter)
 //  - peep test.txt 50kk-60sk (either of the specifiers are not non-zero numbers)
-pub fn main() !void {
+pub fn main(init: std.process.Init) !void {
     // var args = std.process.args(); // Works on POSIX only, not windows
     //  - the implementation below should work for both.
     //  - TODO: Confirm
-    const global_allocator = std.heap.page_allocator;
-    var args = try std.process.argsWithAllocator(global_allocator);
+    // const global_allocator = std.heap.page_allocator;
+    const args = try init.minimal.args.toSlice(init.arena.allocator());
 
     var args_buffer: [10][]const u8 = undefined;
 
     var j: u8 = 0;
 
     // We only need args[1-2] here so we'll exit the loop early.
-    while (args.next()) |x| {
+    for (args, 0..) |x, idx| {
+        _ = idx;
+
         args_buffer[j] = x;
         j += 1;
 
@@ -108,8 +109,8 @@ pub fn main() !void {
     const cwd = std.Io.Dir.cwd();
     if (cwd.openFile(io, file_name, .{})) |file| {
         const stat = try file.stat(io);
-        if (stat.kind != std.fs.File.Kind.file) {
-            if (stat.kind == std.fs.File.Kind.directory) {
+        if (stat.kind != std.Io.File.Kind.file) {
+            if (stat.kind == std.Io.File.Kind.directory) {
                 // TODO: List root directory entries
                 print("{s} is a directory\n", .{file_name});
                 // const dir =  try std.Io.Dir.it(cwd, io, file_name, .{.iterate = true});
