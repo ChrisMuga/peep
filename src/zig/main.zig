@@ -118,9 +118,13 @@ pub fn main(init: std.process.Init) !void {
                 var dirIterator = std.Io.Dir.iterate(dir);
 
                 while (try dirIterator.next(io)) |v| {
-                    // TODO: Some sort of formatting, and spacing here when listing a dir.
-                    // TODO: On surface level, if entry is dir, flag it, if it is a file, flag it as well.
-                    print("\t-> {s}\n", .{v.name});
+                    var ext: []const u8 = "";
+
+                    if (v.kind == std.Io.File.Kind.directory) {
+                        ext = "/*";
+                    }
+
+                    print("\t-> {s}{s}\n", .{ v.name, t });
                 }
 
                 return;

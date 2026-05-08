@@ -3,7 +3,7 @@ build-run:
 build:
 	@ zig build
 run:
-	@ ./zig-out/bin/peep samples/input.txt
+	@ ./zig-out/bin/peep ./
 build-c:
 	@ mkdir -p bin/c
 	@ gcc -o bin/c/peep src/c/main.c
