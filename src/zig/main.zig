@@ -124,7 +124,7 @@ pub fn main(init: std.process.Init) !void {
                         ext = "/*";
                     }
 
-                    print("\t-> {s}{s}\n", .{ v.name, t });
+                    print("\t-> {s}{s}\n", .{ v.name, ext });
                 }
 
                 return;
