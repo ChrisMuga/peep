@@ -113,12 +113,14 @@ pub fn main(init: std.process.Init) !void {
             if (stat.kind == std.Io.File.Kind.directory) {
                 // TODO: List root directory entries
                 print("{s} is a directory\n", .{file_name});
-                const dir =  try std.Io.Dir.openDir(cwd, io, file_name, .{.iterate = true});
+                const dir = try std.Io.Dir.openDir(cwd, io, file_name, .{ .iterate = true });
                 defer dir.close(io);
                 var dirIterator = std.Io.Dir.iterate(dir);
 
-                while(try dirIterator.next(io))|v|{
-                   print("{s}\n", .{v.name}); 
+                while (try dirIterator.next(io)) |v| {
+                    // TODO: Some sort of formatting, and spacing here when listing a dir.
+                    // TODO: On surface level, if entry is dir, flag it, if it is a file, flag it as well.
+                    print("\t-> {s}\n", .{v.name});
                 }
 
                 return;
