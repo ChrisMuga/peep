@@ -6,7 +6,7 @@
 > Running on:
 >   - `gcc/clang/g++`
 >   - `odin dev-2025-10-nightly:81375e5`
->   - `zig 0.16.0-dev.732+2f3234c76`
+>   - `zig v0.17.0-dev.263+0add2dfc4`
 
 ## Running
 ```sh
