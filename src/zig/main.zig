@@ -76,8 +76,19 @@ pub fn main(init: std.process.Init) !void {
         }
     } else if (j == 3) {
         utils.cls();
-        var range_split = std.mem.splitSequence(u8, args_buffer[2], ":");
+
+        var token = ":";
+
+        const f = std.mem.find(u8, args_buffer[2], ":");
+
+        if (f == null) {
+            token = "-";
+        }
+
+        var range_split = std.mem.splitSequence(u8, args_buffer[2], token);
+
         var i: u8 = 0;
+
         while (range_split.next()) |x| {
             switch (i) {
                 0 => {
