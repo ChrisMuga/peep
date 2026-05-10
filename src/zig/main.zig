@@ -28,8 +28,6 @@ const fs = std.fs;
 // TODO: Implement piping e.g. `git log | peep`
 // TODO: Look into semver - semantic versioning
 // TODO: use @cImport to run C code in zig
-// TODO: peep test.txt:10
-// TODO: peep test.txt:10:20
 // TODO: Error handling in case:
 //  - peep test.txt e (if line specifier A is invalid)
 //  - peep test.txt 50:e (if line specifier B is invalid)
