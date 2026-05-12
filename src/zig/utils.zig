@@ -63,8 +63,8 @@ pub fn handleFlagVersion() void {
     echo("v0.0.1");
 }
 
-// TODO: repeatStr is not working, fix.
-pub fn repeatStr(elem: []const u8, times: usize) ![] u8 {
+// FIXME: [Failing tests]
+pub fn repeatStr(elem: []const u8, times: usize) ![]u8 {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer arena.deinit();
 
@@ -75,7 +75,7 @@ pub fn repeatStr(elem: []const u8, times: usize) ![] u8 {
     var count: i8 = 0;
 
     while (count < times) {
-        const x = try std.mem.concat(allocator, u8, &.{res, elem});
+        const x = try std.mem.concat(allocator, u8, &.{ res, elem });
         @memcpy(res, x);
         count += 1;
     }
