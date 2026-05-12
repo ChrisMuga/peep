@@ -3,7 +3,7 @@ build-run:
 build:
 	@ zig build
 run:
-	@ ./zig-out/bin/peep ./src/zig/main.zig 10-20
+	@ ./zig-out/bin/peep ./src
 build-c:
 	@ mkdir -p bin/c
 	@ gcc -o bin/c/peep src/c/main.c

@@ -120,27 +120,13 @@ pub fn main(init: std.process.Init) !void {
         const stat = try file.stat(io);
         if (stat.kind != std.Io.File.Kind.file) {
             if (stat.kind == std.Io.File.Kind.directory) {
-                // TODO: List root directory entries
-                print("{s} is a directory\n", .{file_name});
-                const dir = try std.Io.Dir.openDir(cwd, io, file_name, .{ .iterate = true });
-                defer dir.close(io);
-                var dirIterator = std.Io.Dir.iterate(dir);
-
-                while (try dirIterator.next(io)) |v| {
-                    var ext: []const u8 = "";
-
-                    if (v.kind == std.Io.File.Kind.directory) {
-                        ext = "/*";
-                    }
-
-                    print("\t-> {s}{s}\n", .{ v.name, ext });
-                }
-
+                try utils.listDir(cwd, file_name);
                 return;
             }
-
             print("Error: {s} is not a file\n", .{file_name});
             return;
+        } else {
+            std.debug.print("\t-> {s}/*\n", .{file_name});
         }
 
         const file_size = stat.size;
