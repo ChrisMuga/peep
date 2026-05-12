@@ -64,30 +64,25 @@ pub fn handleFlagVersion() void {
 }
 
 // FIXME: [Failing tests]
-pub fn repeatStr(elem: []const u8, times: usize) ![]u8 {
-    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
-    defer arena.deinit();
-
-    const allocator = arena.allocator();
-
+pub fn repeatStr(allocator: std.mem.Allocator, elem: []const u8, times: usize) ![]u8 {
     const res = try allocator.alloc(u8, times * elem.len);
+    defer allocator.free(res);
 
-    var count: i8 = 0;
+    var idx: usize = 0;
+    var count: usize = 0;
 
     while (count < times) {
-        const x = try std.mem.concat(allocator, u8, &.{ res, elem });
-        @memcpy(res, x);
+        @memcpy(res[idx .. idx + elem.len], elem);
+
         count += 1;
+        idx += elem.len;
     }
 
-    std.debug.print("{s}\n", .{elem});
-    std.debug.print("~~~~>{s}|\n", .{res});
     return res;
 }
 
 pub fn listDir(dir: std.Io.Dir, file_name: []const u8) !void {
-    var level: usize = 0;
-    // std.debug.print("{s}/\n", .{file_name});
+    var level: usize = 8;
 
     var threaded: std.Io.Threaded = .init_single_threaded;
     const io = threaded.io();
@@ -96,8 +91,14 @@ pub fn listDir(dir: std.Io.Dir, file_name: []const u8) !void {
     defer currDir.close(io);
     var dirIterator = std.Io.Dir.iterate(currDir);
 
-    _ = try repeatStr("dan", level);
-    const sep = "";
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+    const sep = try repeatStr(allocator, "dan", level);
+    defer allocator.free(sep);
+
+    std.debug.print("{s}\n", .{sep});
 
     while (try dirIterator.next(io)) |v| {
         if (v.kind == std.Io.File.Kind.directory) {
