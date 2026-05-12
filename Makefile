@@ -2,6 +2,8 @@ build-run:
 	@ make build run -s
 build:
 	@ zig build
+test: 
+	@ zig test ./src/zig/tests.zig
 run:
 	@ ./zig-out/bin/peep ./src
 build-c:
