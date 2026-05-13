@@ -64,7 +64,6 @@ pub fn handleFlagVersion() void {
     echo("v0.0.1");
 }
 
-// FIXME: [Failing tests]
 pub fn repeatStr(allocator: std.mem.Allocator, elem: []const u8, times: usize) ![]u8 {
     const res: []u8 = try allocator.alloc(u8, times * elem.len);
 
