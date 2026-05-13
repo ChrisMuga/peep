@@ -92,7 +92,7 @@ pub fn listDir(dir: std.Io.Dir, file_name: []const u8, level: usize) !void {
     defer arena.deinit();
 
     const allocator = arena.allocator();
-    const sep = try repeatStr(allocator, "\t", level);
+    const sep = try repeatStr(allocator, "  ", level);
     defer allocator.free(sep);
 
     while (try dirIterator.next(io)) |v| {
