@@ -65,8 +65,7 @@ pub fn handleFlagVersion() void {
 
 // FIXME: [Failing tests]
 pub fn repeatStr(allocator: std.mem.Allocator, elem: []const u8, times: usize) ![]u8 {
-    const res = try allocator.alloc(u8, times * elem.len);
-    defer allocator.free(res);
+    const res: []u8 = try allocator.alloc(u8, times * elem.len);
 
     var idx: usize = 0;
     var count: usize = 0;
@@ -81,9 +80,7 @@ pub fn repeatStr(allocator: std.mem.Allocator, elem: []const u8, times: usize) !
     return res;
 }
 
-pub fn listDir(dir: std.Io.Dir, file_name: []const u8) !void {
-    var level: usize = 8;
-
+pub fn listDir(dir: std.Io.Dir, file_name: []const u8, level: usize) !void {
     var threaded: std.Io.Threaded = .init_single_threaded;
     const io = threaded.io();
     const currDir = try std.Io.Dir.openDir(dir, io, file_name, .{ .iterate = true });
@@ -95,19 +92,15 @@ pub fn listDir(dir: std.Io.Dir, file_name: []const u8) !void {
     defer arena.deinit();
 
     const allocator = arena.allocator();
-    const sep = try repeatStr(allocator, "dan", level);
+    const sep = try repeatStr(allocator, "\t", level);
     defer allocator.free(sep);
-
-    std.debug.print("{s}\n", .{sep});
 
     while (try dirIterator.next(io)) |v| {
         if (v.kind == std.Io.File.Kind.directory) {
-            level += 1;
-
-            std.debug.print("{s} {s}/*\n", .{ v.name, sep });
-            try listDir(currDir, v.name);
+            std.debug.print("{s}- {s}/*\n", .{ sep, v.name });
+            try listDir(currDir, v.name, level + 1);
         } else {
-            std.debug.print("{s} {s}\n", .{ v.name, sep });
+            std.debug.print("{s}- {s}\n", .{ sep, v.name });
         }
     }
 }

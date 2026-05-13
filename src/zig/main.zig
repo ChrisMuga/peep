@@ -120,7 +120,7 @@ pub fn main(init: std.process.Init) !void {
         const stat = try file.stat(io);
         if (stat.kind != std.Io.File.Kind.file) {
             if (stat.kind == std.Io.File.Kind.directory) {
-                try utils.listDir(cwd, file_name);
+                try utils.listDir(cwd, file_name, 0);
                 return;
             }
             print("Error: {s} is not a file\n", .{file_name});
