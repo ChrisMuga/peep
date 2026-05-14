@@ -9,3 +9,13 @@ test "repeatStr(\"dan\", 3) -> \"dandandan\"" {
 
     try std.testing.expectEqualStrings(repeated, "dandandan");
 }
+
+test "isFlag(\"--help\") -> true" {
+    const res = utils.isFlag("--help");
+    try std.testing.expectEqual(res, true);
+}
+
+test "isFlag(\"help--\") -> false" {
+    const res2 = utils.isFlag("help--");
+    try std.testing.expectEqual(res2, false);
+}
