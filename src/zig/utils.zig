@@ -64,7 +64,7 @@ pub fn handleFlagVersion() void {
     echo("v0.0.1");
 }
 
-pub fn repeatStr(allocator: std.mem.Allocator, elem: []const u8, times: usize) ![]u8 {
+pub fn repeat(allocator: std.mem.Allocator, elem: []const u8, times: usize) ![]u8 {
     const res: []u8 = try allocator.alloc(u8, times * elem.len);
 
     var idx: usize = 0;
@@ -92,7 +92,7 @@ pub fn listDir(dir: std.Io.Dir, file_name: []const u8, level: usize) !void {
     defer arena.deinit();
 
     const allocator = arena.allocator();
-    const sep = try repeatStr(allocator, "  ", level);
+    const sep = try repeat(allocator, "  ", level);
     defer allocator.free(sep);
 
     while (try dirIterator.next(io)) |v| {

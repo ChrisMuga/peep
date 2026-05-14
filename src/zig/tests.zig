@@ -1,10 +1,10 @@
 const std = @import("std");
 const utils = @import("utils.zig");
 
-test "repeatStr(\"dan\", 3) -> \"dandandan\"" {
+test "repeat(\"dan\", 3) -> \"dandandan\"" {
     const allocator = std.testing.allocator;
 
-    const repeated = try utils.repeatStr(allocator, "dan", 3);
+    const repeated = try utils.repeat(allocator, "dan", 3);
     defer allocator.free(repeated);
 
     try std.testing.expectEqualStrings(repeated, "dandandan");
