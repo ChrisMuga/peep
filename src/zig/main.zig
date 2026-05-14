@@ -139,10 +139,6 @@ pub fn main(init: std.process.Init) !void {
         const buffer = try allocator.alloc(u8, file_size);
         defer allocator.free(buffer);
 
-        // TODO: I don't understand what's going on here, we should investigate.
-        //      - See: https://github.com/ziglang/zig/pull/25592
-        //      - See: https://www.reddit.com/r/Zig/comments/1oo8u5z/can_someone_explain_to_me_the_new_stdio_interface/
-        //      - I don't understand why we had to add the io
         var reader = file.reader(io, buffer);
 
         // TODO: There may be a better implementation here...
