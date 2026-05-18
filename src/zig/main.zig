@@ -125,8 +125,6 @@ pub fn main(init: std.process.Init) !void {
             }
             print("Error: {s} is not a file\n", .{file_name});
             return;
-        } else {
-            std.debug.print("\t-> {s}/*\n", .{file_name});
         }
 
         const file_size = stat.size;
