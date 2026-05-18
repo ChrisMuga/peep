@@ -97,7 +97,7 @@ pub fn listDir(dir: std.Io.Dir, file_name: []const u8, level: usize) !void {
 
     while (try dirIterator.next(io)) |v| {
         if (v.kind == std.Io.File.Kind.directory) {
-            std.debug.print("{s}📁 {s}/*\n", .{ sep, v.name });
+            std.debug.print("{s}📁 {s}/\n", .{ sep, v.name });
             try listDir(currDir, v.name, level + 1);
         } else {
             std.debug.print("{s}📄 {s}\n", .{ sep, v.name });
