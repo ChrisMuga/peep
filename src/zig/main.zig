@@ -29,10 +29,6 @@ const fs = std.fs;
 // TODO: Look into semver - semantic versioning
 // TODO: use @cImport to run C code in zig
 // TODO: Error handling in case:
-//  - peep test.txt e (if line specifier A is invalid)
-//  - peep test.txt 50:e (if line specifier B is invalid)
-//  - peep test.txt 50-60 ("-" is an invalid delimiter)
-//  - peep test.txt 50kk-60sk (either of the specifiers are not non-zero numbers)
 pub fn main(init: std.process.Init) !void {
     const args = try init.minimal.args.toSlice(init.arena.allocator());
 
