@@ -34,10 +34,6 @@ const fs = std.fs;
 //  - peep test.txt 50-60 ("-" is an invalid delimiter)
 //  - peep test.txt 50kk-60sk (either of the specifiers are not non-zero numbers)
 pub fn main(init: std.process.Init) !void {
-    // var args = std.process.args(); // Works on POSIX only, not windows
-    //  - the implementation below should work for both.
-    //  - TODO: Confirm
-    // const global_allocator = std.heap.page_allocator;
     const args = try init.minimal.args.toSlice(init.arena.allocator());
 
     var args_buffer: [10][]const u8 = undefined;
