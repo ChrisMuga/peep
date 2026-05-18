@@ -23,12 +23,6 @@ const fs = std.fs;
 ///     - ./zig-out/bin/peep example.txt 14 // To print line 14 only
 ///     - ./zig-out/bin/peep example.txt 14:20 // To print lines 14 to 20
 
-// TODO: Get started with tests
-// TODO: Implement man page for peep
-// TODO: Implement piping e.g. `git log | peep`
-// TODO: Look into semver - semantic versioning
-// TODO: use @cImport to run C code in zig
-// TODO: Error handling in case:
 pub fn main(init: std.process.Init) !void {
     const args = try init.minimal.args.toSlice(init.arena.allocator());
 
